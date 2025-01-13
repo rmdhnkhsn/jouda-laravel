@@ -57,7 +57,9 @@ Transfer Bank Manual
                     <input type="hidden" name="post_code" value="{{ $data['post_code'] }}">
                     <input type="hidden" name="division_id" value="{{ $data['division_id'] }}">
                     <input type="hidden" name="district_id" value="{{ $data['district_id'] }}">
-                    <input type="hidden" name="state_id" value="{{ $data['state_id'] }}">
+                    <input type="hidden" name="division" value="{{ $data['division'] }}">
+                    <input type="hidden" name="district" value="{{ $data['district'] }}">
+                    <input type="hidden" name="subdistrict" value="{{ $data['subdistrict'] }}">
                     <input type="hidden" name="address" value="{{ $data['address'] }}">
 
                     <div class="cards">

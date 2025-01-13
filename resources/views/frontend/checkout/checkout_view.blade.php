@@ -33,7 +33,7 @@ Chekout
                             <select class="form-control bordered" id="division_id" name="division_id">
                                 <option selected="" disabled="">--Pilih Provinsi--</option>
                                 @foreach ($divisions->rajaongkir->results as $item )
-                                    <option value="{{$item->province_id}}">{{ $item->province }}</option>
+                                    <option value="{{$item->province_id}}" alias="{{ $item->province }}">{{ $item->province }}</option>
                                 @endforeach
                                 {{--@foreach($divisions as $item)
                                     <option value="{{ $item->id }}">{{ $item->division_name }}</option>
@@ -45,29 +45,30 @@ Chekout
                         </div>
                         <div class="form-group">
                             <label class="labelForm">Kota/Kabupaten</label>
-                            <select class="form-control bordered" id="district_id" name="district_id" onchange="getCost()">
+                            <select class="form-control bordered" id="district_id" name="district_id" onchange="getCost();getSubDistrict()">
                                 <option selected="" disabled="">--Pilih Kota/Kabupaten--</option>
                             </select>
                             @error('district_id')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="labelForm">Kecamatan</label>
-                            <select class="form-control bordered" id="state_id" name="state_id">
+                            <select class="form-control bordered" id="subdistrict_id" name="subdistrict_id">
                                 <option selected="" disabled="">--Pilih Kecamatan--</option>
                             </select>
-                            @error('state_id')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
+                        </div> -->
+                        <div class="form-group">
+                            <label class="labelForm">Kecamatan</label>
+                            <input type="text" class="form-control bordered" id="subdistrict" name="subdistrict" value="" placeholder="*Masukkan kecamatan anda..." required>
                         </div>
                         <div class="form-group">
                             <label class="labelForm">Kode Pos</label>
-                            <input type="number" class="form-control bordered" id="post_code" name="post_code" value="{{ Auth::user()->post_code }}" placeholder="*Masukkan kode pos anda...">
+                            <input type="number" class="form-control bordered" id="post_code" name="post_code" value="{{ Auth::user()->post_code }}" placeholder="*Masukkan kode pos anda..." required>
                         </div>
                         <div class="form-group">
                             <label class="labelForm">Layanan Kurir</label>
-                            <select class="form-control bordered" id="courier" name="courier" onchange="calculateCost()">
+                            <select class="form-control bordered" id="courier" name="courier" onchange="calculateCost()" required>
                                 <option selected="" disabled="">--Pilih Kurir--</option>
                             </select>
                         </div>
@@ -81,7 +82,7 @@ Chekout
                     <div class="cards">
                         <div class="headTitle">METODE PEMBAYARAN</div>
                         <div class="form-group">
-                            <input type="radio" name="payment_method" id="payment_method" value="transfer">
+                            <input type="radio" name="payment_method" id="payment_method" value="transfer" required>
                             <label for="payment_method" class="labelForm">Transfer</label>
                             <div class="paymentImg">
                                 <img src="{{ asset('frontend/assets/images/payments/bri.png') }}">
@@ -125,6 +126,8 @@ Chekout
                         <div class="paymentInfo">
                             <input type="hidden" id="total_weight" name="total_weight" value="{{$total_weight}}">
                             <input type="hidden" id="jasa_kirim" name="jasa_kirim" value="">
+                            <input type="hidden" id="division" name="division" value="">
+                            <input type="hidden" id="district" name="district" value="">
                             <div class="containers">
                                 <div class="text">Sub Total :</div>
                                 <div class="text price">Rp. <span>{{ number_format($cartTotal, 0, '', '.') }}</span></div>
@@ -167,7 +170,10 @@ Chekout
     $(document).ready(function () {
         $('select[name="division_id"]').on('change', function () {
             let division_id = $(this).val();
-            console.log(division_id)
+
+            var selectedOption = $('#division_id').find(':selected');
+            let division = selectedOption.attr('alias');
+            $('#division').val(division)
             if (division_id) {
                 $.ajax({
                     url: "{{  url('/district-get/ajax') }}/" + division_id,
@@ -175,14 +181,13 @@ Chekout
                     dataType: "json",
                     success: function (res) {
                         let data = res.rajaongkir.results;
-                        console.log(data)
+                        // console.log(data)
                         $('select[name="state_id"]').html('');
                         $('select[name="district_id"]').html('');
                         $.each(data, function (key, value) {
                             // console.log(value)
                             $('select[name="district_id"]').append(
-                                '<option value="' + value.city_id + '">' + value
-                                .city_name + '</option>');
+                                '<option value="' + value.city_id + '" alias="' + value.city_name + '">' + value.city_name + '</option>');
                         });
 
                         getCost()
@@ -200,6 +205,11 @@ Chekout
         let division_id = $('#division_id').val();
         let district_id = $('#district_id').val();
         let total_weight = $('#total_weight').val();
+
+        var selectedOption = $('#district_id').find(':selected');
+        let district = selectedOption.attr('alias');
+        $('#district').val(district)
+
         if (district_id) {
             $.ajax({
                 url: "{{  url('/cost-get/ajax') }}/" + division_id + '/' + district_id + '/' + total_weight,

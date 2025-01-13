@@ -97,7 +97,10 @@ class CheckoutController extends Controller
     	$data['post_code'] = $request->post_code;
     	$data['division_id'] = $request->division_id;
     	$data['district_id'] = $request->district_id;
-    	$data['state_id'] = $request->state_id;
+    	$data['division'] = $request->division;
+    	$data['district'] = $request->district;
+    	$data['subdistrict'] = $request->subdistrict;
+    	// $data['state_id'] = $request->state_id;
     	$data['address'] = $request->address;
     	$data['jasa_kirim'] = $request->jasa_kirim;
     	$cartTotal = Cart::total();

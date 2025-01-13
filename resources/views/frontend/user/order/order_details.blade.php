@@ -209,7 +209,7 @@
                         <tr>
                             <td width="40%">Alamat</td>
                             <td>:</td>
-                            <td style="font-weight: 600">{{ $order->address }} <br> {{ $order->state->state_name }}, {{ $order->district->district_name }}, <br> {{ $order->division->division_name }}, {{ $order->poscode }}</td>
+                            <td style="font-weight: 600">{{ $order->address }} <br> {{ $order->subdistrict }}, {{ $order->district }}, <br> {{ $order->division }}, {{ $order->post_code }}</td>
                         </tr>
                     </table>
                 </div>

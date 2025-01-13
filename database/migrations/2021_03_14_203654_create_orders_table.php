@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('division_id');
             $table->unsignedBigInteger('district_id');
-            $table->unsignedBigInteger('state_id');
+            $table->unsignedBigInteger('state_id')->nullable();
             $table->string('name');
             $table->string('email');
             $table->string('phone');
@@ -47,6 +47,9 @@ class CreateOrdersTable extends Migration
             $table->string('return_order')->nullable();
             $table->string('return_reason')->nullable();
             $table->string('status');
+            $table->string('division');
+            $table->string('district');
+            $table->string('subdistrict');
             $table->timestamps();
         }); 
     }
