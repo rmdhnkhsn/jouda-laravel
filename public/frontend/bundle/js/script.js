@@ -114,6 +114,31 @@ $(document).ready(function () {
       },
   });
 
+  var swiper = new Swiper(".swiperRelatedProduct", {
+      slidesPerView: 4, 
+      loop: true,
+      slideToClickedSlide: false,
+      spaceBetween: 30,
+      slidesPerGroup: 1,
+      autoplay: {
+          delay: 4000,
+      },
+      breakpoints: {
+          1000: {
+              slidesPerView: 4,
+          },
+          860: {
+              slidesPerView: 3,
+          },
+          400: {
+              slidesPerView: 2,
+          },
+          200: {
+              slidesPerView: 1,
+          },
+      },
+  });
+
   var query = window.location;
   var url = new URL(query);
   var type = url.searchParams.get("type");

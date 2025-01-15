@@ -1,20 +1,17 @@
 @extends('frontend.main_master')
 @section('content')
 
-<div class="body-content outer-top-bd">
-	<div class="container">
-		<div class="x-page inner-bottom-sm">
-			<div class="row">
-				<div class="col-md-12 x-text text-center">
-					<h1>404</h1>
-					<p>We are sorry, the page you've requested is not available. </p>
-					 
-					<a href="{{ url('/') }}"><i class="fa fa-home"></i> Go To Homepage</a>
-				</div>
-			</div><!-- /.row -->
-		</div><!-- /.sigin-in-->
-	</div><!-- /.container -->
-</div><!-- /.body-content -->
+@section('title')
+    404
+@endsection
+
+<section class="content">
+    <div class="wrapperError">
+		<img src="{{asset('frontend/bundle/img/404.png')}}" class="errorImg">
+		<div class="text">We are sorry, the page you've requested is not available. </div>
+		<a href="{{ url('/') }}" class="btnRounded lg"><i class="fa fa-home"></i> Go To Homepage</a>
+    </div>
+</section>
 
 
 @endsection

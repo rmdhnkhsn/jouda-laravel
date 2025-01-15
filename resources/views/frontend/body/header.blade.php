@@ -106,16 +106,32 @@
             <span class="link_name">Order Traking</span>
           </a>
         </li>
-        <li class="nav-menu menu-link auth">
-            <a href="{{ route('login') }}">
-                <span class="link_name">login</span>
-            </a>
-        </li>
-        <li class="nav-menu menu-link auth">
-            <a href="{{ route('login') }}?type=register">
-                <span class="link_name">register</span>
-            </a>
-        </li>
+        @auth
+          <li class="nav-menu menu-link auth">
+              <a href="{{ route('dashboard') }}">
+                  <span class="link_name">Profile</span>
+              </a>
+          </li>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <li class="nav-menu menu-link auth">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                    <span class="link_name">Logout</span>
+                </a>
+            </li>
+          </form>
+        @else
+          <li class="nav-menu menu-link auth">
+              <a href="{{ route('login') }}">
+                  <span class="link_name">login</span>
+              </a>
+          </li>
+          <li class="nav-menu menu-link auth">
+              <a href="{{ route('login') }}?type=register">
+                  <span class="link_name">register</span>
+              </a>
+          </li>
+        @endauth
     </ul>
 </div>
 
