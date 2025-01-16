@@ -9,7 +9,7 @@
     <div class="pageShop">
         <div class="row">
             @foreach($products as $product)
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 col-6">
                     @php
                         $amount = $product->product_price - $product->product_discount;
                         $discount = ($amount/$product->product_price) * 100;

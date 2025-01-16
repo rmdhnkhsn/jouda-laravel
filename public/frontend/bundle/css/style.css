@@ -959,7 +959,7 @@ footer .sosmed img {
     bottom: 1.4rem;
     right: 1rem;
     padding: 6px 18px;
-    background: #ffffff40;
+    background: #00000040;
     backdrop-filter: blur(4px);
     font-size: 14px;
     font-weight: 500;
@@ -1344,6 +1344,42 @@ footer .sosmed img {
         width: 220px;
         text-align: right;
         margin-top: 0;
+    }
+
+    .pageShop {
+        padding: 0 .8rem;
+        margin: 5rem auto 0 auto;
+    }
+    
+    .orderTracking .headTitle,
+    .pageShop .headTitle {
+        font-size: 16px;
+    }
+    
+    .pageShop .containerImg .label {
+        position: absolute;
+        bottom: .8rem;
+        right: .6rem;
+        padding: 4px 14px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #fff;
+        z-index: 99;
+    }
+    
+    .pageShop .containerDesc {
+        margin-top: 6px;
+        margin-bottom: 2rem;
+    }
+    
+    .pageShop .containerDesc .title {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+    .pageShop .containerDesc .price {
+        font-size: 12px;
+        font-weight: 600;
     }
     
 }
