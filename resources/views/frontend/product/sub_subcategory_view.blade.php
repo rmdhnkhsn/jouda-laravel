@@ -38,9 +38,11 @@ $user = App\Models\User::find($id);
                             {{ $product->product_name }} 
                         </a>
                         @if ($product->product_discount)
-                            <div class="price discount"><span>Rp </span> {{ number_format($product->product_discount, 0, '', '.') }}</div>
+                            <div class="price discount"><span>Rp </span> {{ number_format($product->product_price, 0, '', '.') }}</div>
+                            <div class="price"><span>Rp </span> {{ number_format($product->product_discount, 0, '', '.') }}</div>
+                        @else
+                            <div class="price"><span>Rp </span> {{ number_format($product->product_price, 0, '', '.') }}</div>
                         @endif
-                        <div class="price"><span>Rp </span> {{ number_format($product->product_price, 0, '', '.') }}</div>
                     </div>
                 </div>
             @endforeach

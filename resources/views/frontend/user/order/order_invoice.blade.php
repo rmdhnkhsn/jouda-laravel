@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>JOUDA | INDONESIA</title>
+    <title>SALZA | Invoice</title>
     <style>
         .page-break {
             page-break-after: always;
@@ -66,7 +66,7 @@
     <table width="100%" style="line-height: 1.2;">
         <tr style="font-size: 13px">
             <td width="10%">Penjual</td>
-            <td width="40%">: <strong>JOUDA</strong> | jouda@gmail.com</td>
+            <td width="40%">: <strong>SALZA</strong> | esalza@gmail.com</td>
             <td width="17%">Pembeli</td>
             <td>: <strong>{{ $order->name }}</strong> | {{ $order->email }}</td>
         </tr>
@@ -91,11 +91,11 @@
             <td>Alamat Pengiriman</td>
             <td>:
                 @php
-                    $div = $order->division->division_name;
-                    $dis = $order->district->district_name;
-                    $state = $order->state->state_name;
+                    $division = $order->division;
+                    $district = $order->district;
+                    $subdistrict = $order->subdistrict;
                 @endphp
-                 <strong> {{ $state }},{{ $dis }},{{ $div }} <br> {{ $order->post_code }} </strong>
+                 <strong> {{ $subdistrict }},{{ $district }},{{ $division }} <br> {{ $order->post_code }} </strong>
             </td>
         </tr>
     </table>
@@ -144,14 +144,15 @@
                 </td>
                 <td align="right"><strong style="font-size: 15px">Rp{{ number_format($order->amount, 2, ',', '.') }}</strong></td>
             </tr>
-            {{-- <tr style="font-size: 13px;">
+            <br>
+            <tr style="font-size: 14px;">
                 <td></td>
                 <td></td>
                 <td colspan="2">
-                    Total Ongkos Kirim ({{ number_format($order->totalberat, 0, ',', '.') }} gr)
+                    <strong>JASA KIRIM</strong> 
                 </td>
-                <td align="right">Rp{{ number_format($order->totalongkir, 0, ',', '.') }}</td>
-            </tr> --}}
+                <td align="right"><strong style="font-size: 15px">Rp{{ number_format($order->jasa_kirim, 2, ',', '.') }}</strong></td>
+            </tr>
             <br>
             <tr style="font-size: 14px;">
                 <td></td>
@@ -159,8 +160,9 @@
                 <td colspan="2">
                     <strong>TOTAL BELANJA</strong>
                 </td>
-                <td align="right"><strong style="font-size: 15px">Rp{{ number_format($order->amount, 2, ',', '.') }}</strong></td>
+                <td align="right"><strong style="font-size: 15px">Rp{{ number_format($order->amount + $order->jasa_kirim, 2, ',', '.') }}</strong></td>
             </tr>
+            <br>
             <tr style="font-size: 13px;">
                 <td></td>
                 <td></td>
@@ -175,7 +177,7 @@
     <table width="100%" style="border-bottom: 1px solid #dedede"></table>
     <p>Invoice ini sah dan diproses oleh komputer.</p>
     <p style="line-height: 5px">
-        Silakan hubungi <strong>Jouda Indonesia</strong> apabila kamu membutuhkan bantuan.
+        Silakan hubungi <strong>Salza Care</strong> apabila kamu membutuhkan bantuan.
         <span style="float: right; font-style: italic">Terakhir diupdate: {{ $order->updated_at }} WIB</span>
     </p>
 

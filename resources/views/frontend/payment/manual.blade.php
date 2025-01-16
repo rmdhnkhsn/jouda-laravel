@@ -60,6 +60,7 @@ Transfer Bank Manual
                     <input type="hidden" name="division" value="{{ $data['division'] }}">
                     <input type="hidden" name="district" value="{{ $data['district'] }}">
                     <input type="hidden" name="subdistrict" value="{{ $data['subdistrict'] }}">
+                    <input type="hidden" name="jasa_kirim" value="{{ $data['jasa_kirim'] }}">
                     <input type="hidden" name="address" value="{{ $data['address'] }}">
 
                     <div class="cards">

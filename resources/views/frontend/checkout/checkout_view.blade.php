@@ -125,9 +125,9 @@ Chekout
                         </div>
                         <div class="paymentInfo">
                             <input type="hidden" id="total_weight" name="total_weight" value="{{$total_weight}}">
-                            <input type="hidden" id="jasa_kirim" name="jasa_kirim" value="">
-                            <input type="hidden" id="division" name="division" value="">
-                            <input type="hidden" id="district" name="district" value="">
+                            <input type="hidden" id="jasa_kirim" name="jasa_kirim" value="" required>
+                            <input type="hidden" id="division" name="division" value="" required>
+                            <input type="hidden" id="district" name="district" value="" required>
                             <div class="containers">
                                 <div class="text">Sub Total :</div>
                                 <div class="text price">Rp. <span>{{ number_format($cartTotal, 0, '', '.') }}</span></div>

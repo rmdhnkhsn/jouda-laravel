@@ -175,9 +175,19 @@
                             <td style="font-weight: 600">{{ $order->payment_method }}</td>
                         </tr>
                         <tr>
-                            <td width="40%">Total Belanja</td>
+                            <td width="40%">Total Harga</td>
                             <td>:</td>
                             <td style="font-weight: 600">Rp {{ number_format($order->amount, 2, ',', '.') }}</td>
+                        </tr>
+                        <tr>
+                            <td width="40%">Jasa Kirim</td>
+                            <td>:</td>
+                            <td style="font-weight: 600">Rp {{ number_format($order->jasa_kirim, 2, ',', '.') }}</td>
+                        </tr>
+                        <tr>
+                            <td width="40%">Total Belanja</td>
+                            <td>:</td>
+                            <td style="font-weight: 600">Rp {{ number_format($order->amount + $order->jasa_kirim, 2, ',', '.') }}</td>
                         </tr>
                     </table>
                     @if($order->status == "dalam perjalanan")

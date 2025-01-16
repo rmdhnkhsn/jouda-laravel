@@ -24,7 +24,6 @@ class ManualController extends Controller
     		$total_amount = round(Cart::total());
     	}
 
-	    // dd($charge);
 
         $image = $request->file('bukti_pembayaran');
     	$name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
@@ -50,6 +49,7 @@ class ManualController extends Controller
                 'bukti_pembayaran' => $save_url,
                  
                 'currency' =>  'Rp',
+                'jasa_kirim' => (int)$request->jasa_kirim,
                 'amount' => $total_amount,
        
                 'order_number' => mt_rand(10000000,99999999),
@@ -66,6 +66,7 @@ class ManualController extends Controller
         $invoice = Order::findOrFail($order_id);
         $data = [
             'invoice_no' => $invoice->invoice_no,
+            'jasa_kirim' => (int)$request->jasa_kirim,
             'amount' => $total_amount,
             'name' => $invoice->name,
             'email' => $invoice->email,
@@ -98,6 +99,7 @@ class ManualController extends Controller
         $invoice = Order::findOrFail($order_id);
         $data = [
             'invoice_number' => $invoice->invoice_number,
+            'jasa_kirim' => (int)$request->jasa_kirim,
             'amount' => $total_amount,
             'name' => $invoice->name,
             'email' => $invoice->email,
@@ -116,6 +118,6 @@ class ManualController extends Controller
             'alert-type' => 'success'
         );
 
-		return redirect()->route('dashboard')->with($notification);
+		return redirect()->route('my.orders')->with($notification);
     }
 }

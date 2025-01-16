@@ -104,15 +104,30 @@ class CheckoutController extends Controller
     	$data['address'] = $request->address;
     	$data['jasa_kirim'] = $request->jasa_kirim;
     	$cartTotal = Cart::total();
+		// dd($data);
+
+		if ($data['division'] == null || $data['district'] == null || $data['subdistrict'] == null || $data['jasa_kirim'] == null) {
+			$notification = array(
+				'message' => 'Lengkapi Data Terlebih Dahulu',
+				'alert-type' => 'warning'
+			);
+	
+			return redirect()->route('checkout')->with($notification);
+
+		} else {
+			if ($request->payment_method == 'stripe') {
+				return view('frontend.payment.stripe',compact('data','cartTotal'));
+			}elseif ($request->payment_method == 'cash') {
+					return view('frontend.payment.cash',compact('data','cartTotal'));
+			}else{
+				return view('frontend.payment.manual', compact('data','cartTotal'));
+			}
+		}
+		
 
 
-    	if ($request->payment_method == 'stripe') {
-    		return view('frontend.payment.stripe',compact('data','cartTotal'));
-    	}elseif ($request->payment_method == 'cash') {
-				return view('frontend.payment.cash',compact('data','cartTotal'));
-		}else{
-    		return view('frontend.payment.manual', compact('data','cartTotal'));
-    	}
+
+    	
     	 
 
     }// end mehtod. 

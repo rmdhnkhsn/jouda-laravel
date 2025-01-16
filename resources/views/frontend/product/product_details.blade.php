@@ -32,9 +32,11 @@
         <div class="details">
             <div class="fixedDetail">
                 <div class="title" id="pname">{{ $product->product_name }}</div>
-                <div class="price"><span>Rp. </span> {{ number_format($product->product_price, 0, '', '.') }}</div>
                 @if ($product->product_discount)
-                    <div class="discount"><span>Rp. </span> {{ number_format($product->product_discount, 0, '', '.') }}</div>
+                    <div class="price discount"><span>Rp </span> {{ number_format($product->product_price, 0, '', '.') }}</div>
+                    <div class="price"><span>Rp </span> {{ number_format($product->product_discount, 0, '', '.') }}</div>
+                @else
+                    <div class="price"><span>Rp </span> {{ number_format($product->product_price, 0, '', '.') }}</div>
                 @endif
                 @php
                     $reviewcount = App\Models\Review::where('product_id',$product->id)->where('status',1)->latest()->get();

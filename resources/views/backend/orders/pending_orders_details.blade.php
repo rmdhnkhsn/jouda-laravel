@@ -74,12 +74,17 @@
                                 <tr>
                                     <td>Total Harga</td>
                                     <td>:</td>
-                                    <td>Rp{{ number_format($order->amount, 0, ',', '.') }}</td>
+                                    <td>Rp{{ number_format($order->amount, 2, ',', '.') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Jasa Kirim</td>
+                                    <td>:</td>
+                                    <td>Rp{{ number_format($order->jasa_kirim, 2, ',', '.') }}</td>
                                 </tr>
                                 <tr>
                                     <td>Total Belanja</td>
                                     <td>:</td>
-                                    <td>Rp{{ number_format($order->amount, 2, ',', '.') }}</td>
+                                    <td>Rp{{ number_format($order->amount + $order->jasa_kirim, 2, ',', '.') }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -115,8 +120,8 @@
                                     <td>Alamat Pengiriman</td>
                                     <td>:</td>
                                     <td>
-                                        {{ $order->address }}, {{ $order->state->state_name }}, <br>
-                                        {{ $order->district->district_name }}, {{ $order->division->division_name }}
+                                        {{ $order->address }}, {{ $order->subdistrict }}, <br>
+                                        {{ $order->district }}, {{ $order->division }}
                                     </td>
                                     <td></td>
                                 </tr>
