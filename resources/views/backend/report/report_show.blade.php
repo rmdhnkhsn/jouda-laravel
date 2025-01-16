@@ -21,11 +21,11 @@
 									<thead>
 										<tr>
 											<th width="5%">No.</th>
-                      <th>Tanggal </th>
-                      <th>Invoice </th>
-                      <th>Total Bayar </th>
-                      <th>Metode Bayar </th>
-                      <th>Status </th>
+											<th>Tanggal </th>
+											<th>Invoice </th>
+											<th>Total Bayar </th>
+											<th>Metode Bayar </th>
+											<th>Status </th>
 											<th width="20%">Opsi</th>
 										</tr>
 									</thead>
@@ -34,20 +34,20 @@
 											<tr>
 												<td>{{ $key+1 }}</td>
 												<td> {{ $item->order_date }} </td>
-                        <td> {{ $item->invoice_no }} </td>
-                        <td> Rp{{ number_format($item->amount, 0, '', '.') }} </td>
-                        <td> {{ $item->payment_method }} </td>
-                        <td> <span class="badge badge-pill badge-primary">{{ $item->status }} </span>
-                        </td>
-                        <td width="25%">
-                            <a href="{{ route('pending.order.details',$item->id) }}"class="btn btn-info" title="Edit Data">
-															<i class="fa fa-eye"></i>
-														</a>
+												<td> {{ $item->invoice_no }} </td>
+												<td> Rp{{ number_format($item->amount + $item->jasa_kirim, 0, '', '.') }} </td>
+												<td> {{ $item->payment_method }} </td>
+												<td> <span class="badge badge-pill badge-primary">{{ $item->status }} </span>
+												</td>
+												<td width="25%">
+													<a href="{{ route('pending.order.details',$item->id) }}"class="btn btn-info" title="Edit Data">
+																					<i class="fa fa-eye"></i>
+																				</a>
 
-                            <a target="_blank" href="{{ route('invoice.download',$item->id) }}" class="btn btn-danger" title="Invoice Download">
-                              <i class="fa fa-download"></i>
-														</a>
-                        </td>
+													<a target="_blank" href="{{ route('invoice.download',$item->id) }}" class="btn btn-danger" title="Invoice Download">
+													<i class="fa fa-download"></i>
+																				</a>
+												</td>
 											</tr>
 										@endforeach
 									</tbody>

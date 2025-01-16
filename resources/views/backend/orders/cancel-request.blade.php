@@ -32,7 +32,7 @@
                                         <td> {{ $key+1 }} </td>
                                         <td> {{ $item->order_date }} </td>
                                         <td> {{ $item->invoice_no }} </td>
-                                        <td> Rp{{ number_format($item->amount,0,'','.') }} </td>
+                                        <td> Rp{{ number_format($item->amount + $item->jasa_kirim,0,'','.') }} </td>
                                         <td> {{ $item->payment_method }} </td>
                                         <td>
                                             @if($item->cancel_order == 1)

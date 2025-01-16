@@ -40,7 +40,7 @@
 												<td>{{ $item->id }}/{{ $item->user_id }}/{{ $item->order_number }}</td>
 												<td>{{ $item->invoice_no }}</td>
 												<td>{{ $item->payment_method }}</td>
-												<td>Rp{{ number_format($item->amount, 2, ',', '.') }}</td>
+												<td>Rp{{ number_format($item->amount + $item->jasa_kirim, 2, ',', '.') }}</td>
 												<td><span class="badge badge-pill badge-primary">{{ $item->status }} </span></td>
 												<td>
 														<a href="{{ route('pending.order.details', $item->id) }}"

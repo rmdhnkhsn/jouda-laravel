@@ -89,13 +89,9 @@
             <td></td>
             <td></td>
             <td>Alamat Pengiriman</td>
-            <td>:
-                @php
-                    $div = $order->division->division_name;
-                    $dis = $order->district->district_name;
-                    $state = $order->state->state_name;
-                @endphp
-                 <strong> {{ $state }},{{ $dis }},{{ $div }} <br> {{ $order->post_code }} </strong>
+            <td>: 
+                {{ $order->address }}, {{ $order->subdistrict }}, <br>
+                {{ $order->district }}, {{ $order->division }}
             </td>
         </tr>
     </table>
@@ -144,22 +140,22 @@
                 </td>
                 <td align="right"><strong style="font-size: 15px">Rp{{ number_format($order->amount, 2, ',', '.') }}</strong></td>
             </tr>
-            {{-- <tr style="font-size: 13px;">
+            <br>
+            <tr style="font-size: 14px;">
                 <td></td>
                 <td></td>
                 <td colspan="2">
-                    Total Ongkos Kirim ({{ number_format($order->totalberat, 0, ',', '.') }} gr)
+                    <strong>JASA KIRIM</strong>
                 </td>
-                <td align="right">Rp{{ number_format($order->totalongkir, 0, ',', '.') }}</td>
-            </tr> --}}
-            <br>
+                <td align="right"><strong style="font-size: 15px">Rp{{ number_format($order->jasa_kirim, 2, ',', '.') }}</strong></td>
+            </tr>
             <tr style="font-size: 14px;">
                 <td></td>
                 <td></td>
                 <td colspan="2">
                     <strong>TOTAL BELANJA</strong>
                 </td>
-                <td align="right"><strong style="font-size: 15px">Rp{{ number_format($order->amount, 2, ',', '.') }}</strong></td>
+                <td align="right"><strong style="font-size: 15px">Rp{{ number_format($order->amount + $order->jasa_kirim, 2, ',', '.') }}</strong></td>
             </tr>
             <tr style="font-size: 13px;">
                 <td></td>
