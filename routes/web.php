@@ -4,6 +4,7 @@ use App\Models\User;
  
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandController;
@@ -43,508 +44,508 @@ use App\Http\Controllers\Frontend\ShopController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
- 
-Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
-	Route::get('/login', [AdminController::class, 'loginForm']);
-	Route::post('/login',[AdminController::class, 'store'])->name('admin.login');
-});
+*/ 
 
+    Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
+        Route::get('/login', [AdminController::class, 'loginForm']);
+        Route::post('/login',[AdminController::class, 'store'])->name('admin.login');
+    });
 
-Route::middleware(['auth:admin'])->group(function(){
 
+    Route::middleware(['auth:admin'])->group(function(){
 
 
-Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', function () {
-    return view('admin.index');
-})->name('dashboard')->middleware('auth:admin');
 
-// Admin All Routes 
+    Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', function () {
+        return view('admin.index');
+    })->name('dashboard')->middleware('auth:admin');
 
-Route::get('/admin/logout', [AdminController::class, 'destroy'])->name('admin.logout');
+    // Admin All Routes 
 
-Route::get('/admin/profile', [AdminProfileController::class, 'AdminProfile'])->name('admin.profile');
+    Route::get('/admin/logout', [AdminController::class, 'destroy'])->name('admin.logout');
 
-Route::post('/admin/profile/store', [AdminProfileController::class, 'AdminProfileStore'])->name('admin.profile.store');
+    Route::get('/admin/profile', [AdminProfileController::class, 'AdminProfile'])->name('admin.profile');
 
-Route::get('/admin/change/password', [AdminProfileController::class, 'AdminChangePassword'])->name('admin.change.password');
+    Route::post('/admin/profile/store', [AdminProfileController::class, 'AdminProfileStore'])->name('admin.profile.store');
 
-Route::post('/update/change/password', [AdminProfileController::class, 'AdminUpdateChangePassword'])->name('update.change.password');
+    Route::get('/admin/change/password', [AdminProfileController::class, 'AdminChangePassword'])->name('admin.change.password');
 
-});  // end Middleware admin
+    Route::post('/update/change/password', [AdminProfileController::class, 'AdminUpdateChangePassword'])->name('update.change.password');
 
-// User ALL Routes
+    });  // end Middleware admin
 
-Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', function () {
-	$id = Auth::user()->id;
-    $user = User::find($id);
-    return view('dashboard',compact('user'));
-})->name('dashboard');
+    // User ALL Routes
 
-Route::get('/', [IndexController::class, 'index']);
-Route::get('/user/logout', [IndexController::class, 'UserLogout'])->name('user.logout');
+    Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', function () {
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        return view('dashboard',compact('user'));
+    })->name('dashboard');
 
-Route::get('/user/profile', [IndexController::class, 'UserProfile'])->name('user.profile');
+    Route::get('/', [IndexController::class, 'index']);
+    Route::get('/user/logout', [IndexController::class, 'UserLogout'])->name('user.logout');
 
-Route::post('/user/profile/store', [IndexController::class, 'UserProfileStore'])->name('user.profile.store');
+    Route::get('/user/profile', [IndexController::class, 'UserProfile'])->name('user.profile');
 
-Route::get('/user/change/password', [IndexController::class, 'UserChangePassword'])->name('change.password');
+    Route::post('/user/profile/store', [IndexController::class, 'UserProfileStore'])->name('user.profile.store');
 
-Route::post('/user/password/update', [IndexController::class, 'UserPasswordUpdate'])->name('user.password.update');
+    Route::get('/user/change/password', [IndexController::class, 'UserChangePassword'])->name('change.password');
 
+    Route::post('/user/password/update', [IndexController::class, 'UserPasswordUpdate'])->name('user.password.update');
 
-// Admin Brand All Routes 
 
-Route::middleware(['auth:admin'])->prefix('brand')->group(function() { 
+    // Admin Brand All Routes 
 
-Route::get('/view', [BrandController::class, 'BrandView'])->name('all.brand');
+    Route::middleware(['auth:admin'])->prefix('brand')->group(function() { 
 
-Route::post('/store', [BrandController::class, 'BrandStore'])->name('brand.store');
+    Route::get('/view', [BrandController::class, 'BrandView'])->name('all.brand');
 
-Route::get('/edit/{id}', [BrandController::class, 'BrandEdit'])->name('brand.edit');
+    Route::post('/store', [BrandController::class, 'BrandStore'])->name('brand.store');
 
-Route::post('/update', [BrandController::class, 'BrandUpdate'])->name('brand.update');
+    Route::get('/edit/{id}', [BrandController::class, 'BrandEdit'])->name('brand.edit');
 
-Route::get('/delete/{id}', [BrandController::class, 'BrandDelete'])->name('brand.delete');
+    Route::post('/update', [BrandController::class, 'BrandUpdate'])->name('brand.update');
 
-});
+    Route::get('/delete/{id}', [BrandController::class, 'BrandDelete'])->name('brand.delete');
 
-// Admin Category all Routes  
-Route::middleware(['auth:admin'])->prefix('category')->group(function() { 
+    });
 
+    // Admin Category all Routes  
+    Route::middleware(['auth:admin'])->prefix('category')->group(function() { 
 
-Route::get('/view', [CategoryController::class, 'CategoryView'])->name('all.category');
 
-Route::post('/store', [CategoryController::class, 'CategoryStore'])->name('category.store');
+    Route::get('/view', [CategoryController::class, 'CategoryView'])->name('all.category');
 
-Route::get('/edit/{id}', [CategoryController::class, 'CategoryEdit'])->name('category.edit');
+    Route::post('/store', [CategoryController::class, 'CategoryStore'])->name('category.store');
 
-Route::post('/update/{id}', [CategoryController::class, 'CategoryUpdate'])->name('category.update');
+    Route::get('/edit/{id}', [CategoryController::class, 'CategoryEdit'])->name('category.edit');
 
-Route::get('/delete/{id}', [CategoryController::class, 'CategoryDelete'])->name('category.delete');
+    Route::post('/update/{id}', [CategoryController::class, 'CategoryUpdate'])->name('category.update');
 
-// Admin Sub Category All Routes
+    Route::get('/delete/{id}', [CategoryController::class, 'CategoryDelete'])->name('category.delete');
 
-Route::get('/sub/view', [SubCategoryController::class, 'SubCategoryView'])->name('all.subcategory');
+    // Admin Sub Category All Routes
 
-Route::post('/sub/store', [SubCategoryController::class, 'SubCategoryStore'])->name('subcategory.store');
+    Route::get('/sub/view', [SubCategoryController::class, 'SubCategoryView'])->name('all.subcategory');
 
-Route::get('/sub/edit/{id}', [SubCategoryController::class, 'SubCategoryEdit'])->name('subcategory.edit');
+    Route::post('/sub/store', [SubCategoryController::class, 'SubCategoryStore'])->name('subcategory.store');
 
-Route::post('/update', [SubCategoryController::class, 'SubCategoryUpdate'])->name('subcategory.update');
+    Route::get('/sub/edit/{id}', [SubCategoryController::class, 'SubCategoryEdit'])->name('subcategory.edit');
 
-Route::get('/sub/delete/{id}', [SubCategoryController::class, 'SubCategoryDelete'])->name('subcategory.delete');
+    Route::post('/update', [SubCategoryController::class, 'SubCategoryUpdate'])->name('subcategory.update');
 
+    Route::get('/sub/delete/{id}', [SubCategoryController::class, 'SubCategoryDelete'])->name('subcategory.delete');
 
-// Admin Sub->Sub Category All Routes
 
-Route::get('/sub/sub/view', [SubCategoryController::class, 'SubSubCategoryView'])->name('all.subsubcategory');
+    // Admin Sub->Sub Category All Routes
 
-Route::get('/subcategory/ajax/{category_id}', [SubCategoryController::class, 'GetSubCategory']);
+    Route::get('/sub/sub/view', [SubCategoryController::class, 'SubSubCategoryView'])->name('all.subsubcategory');
 
-Route::get('/sub-subcategory/ajax/{subcategory_id}', [SubCategoryController::class, 'GetSubSubCategory']);
+    Route::get('/subcategory/ajax/{category_id}', [SubCategoryController::class, 'GetSubCategory']);
 
-Route::post('/sub/sub/store', [SubCategoryController::class, 'SubSubCategoryStore'])->name('subsubcategory.store');
+    Route::get('/sub-subcategory/ajax/{subcategory_id}', [SubCategoryController::class, 'GetSubSubCategory']);
 
-Route::get('/sub/sub/edit/{id}', [SubCategoryController::class, 'SubSubCategoryEdit'])->name('subsubcategory.edit');
+    Route::post('/sub/sub/store', [SubCategoryController::class, 'SubSubCategoryStore'])->name('subsubcategory.store');
 
-Route::post('/sub/update', [SubCategoryController::class, 'SubSubCategoryUpdate'])->name('subsubcategory.update');
+    Route::get('/sub/sub/edit/{id}', [SubCategoryController::class, 'SubSubCategoryEdit'])->name('subsubcategory.edit');
 
-Route::get('/sub/sub/delete/{id}', [SubCategoryController::class, 'SubSubCategoryDelete'])->name('subsubcategory.delete');
+    Route::post('/sub/update', [SubCategoryController::class, 'SubSubCategoryUpdate'])->name('subsubcategory.update');
 
-});
+    Route::get('/sub/sub/delete/{id}', [SubCategoryController::class, 'SubSubCategoryDelete'])->name('subsubcategory.delete');
 
-// Admin Products All Routes 
+    });
 
-Route::middleware(['auth:admin'])->prefix('product')->group(function() { 
+    // Admin Products All Routes 
 
+    Route::middleware(['auth:admin'])->prefix('product')->group(function() { 
 
-Route::get('/add', [ProductController::class, 'AddProduct'])->name('add.product');
 
-Route::post('/store', [ProductController::class, 'StoreProduct'])->name('product.store');
-Route::get('/manage', [ProductController::class, 'ManageProduct'])->name('manage.product');
+    Route::get('/add', [ProductController::class, 'AddProduct'])->name('add.product');
 
-Route::get('/edit/{id}', [ProductController::class, 'EditProduct'])->name('product.edit');
+    Route::post('/store', [ProductController::class, 'StoreProduct'])->name('product.store');
+    Route::get('/manage', [ProductController::class, 'ManageProduct'])->name('manage.product');
 
-Route::post('/data/update', [ProductController::class, 'ProductDataUpdate'])->name('product.update');
+    Route::get('/edit/{id}', [ProductController::class, 'EditProduct'])->name('product.edit');
 
-Route::post('/image/update', [ProductController::class, 'MultiImageUpdate'])->name('product.gallery.update');
+    Route::post('/data/update', [ProductController::class, 'ProductDataUpdate'])->name('product.update');
 
-Route::post('/thambnail/update', [ProductController::class, 'ThambnailImageUpdate'])->name('product.image.update');
+    Route::post('/image/update', [ProductController::class, 'MultiImageUpdate'])->name('product.gallery.update');
 
-Route::get('/multiimg/delete/{id}', [ProductController::class, 'MultiImageDelete'])->name('product.image.delete');
+    Route::post('/thambnail/update', [ProductController::class, 'ThambnailImageUpdate'])->name('product.image.update');
 
-Route::get('/inactive/{id}', [ProductController::class, 'ProductInactive'])->name('product.inactive');
+    Route::get('/multiimg/delete/{id}', [ProductController::class, 'MultiImageDelete'])->name('product.image.delete');
 
-Route::get('/active/{id}', [ProductController::class, 'ProductActive'])->name('product.active');
+    Route::get('/inactive/{id}', [ProductController::class, 'ProductInactive'])->name('product.inactive');
 
-Route::get('/delete/{id}', [ProductController::class, 'ProductDelete'])->name('product.delete');
+    Route::get('/active/{id}', [ProductController::class, 'ProductActive'])->name('product.active');
 
-Route::get('/export/excel', [ProductController::class, 'ExportExcel'])->name('export.excel');
+    Route::get('/delete/{id}', [ProductController::class, 'ProductDelete'])->name('product.delete');
 
-Route::post('/import/excel', [ProductController::class, 'ImportExcel'])->name('import.excel');
+    Route::get('/export/excel', [ProductController::class, 'ExportExcel'])->name('export.excel');
 
-Route::get('/cetak-pdf', [ProductController::class, 'CetakPDF']);
- 
-});
+    Route::post('/import/excel', [ProductController::class, 'ImportExcel'])->name('import.excel');
 
+    Route::get('/cetak-pdf', [ProductController::class, 'CetakPDF']);
+    
+    });
 
-// Admin Slider All Routes 
 
-Route::middleware(['auth:admin'])->prefix('slider')->group(function() { 
+    // Admin Slider All Routes 
 
+    Route::middleware(['auth:admin'])->prefix('slider')->group(function() { 
 
-Route::get('/view', [SliderController::class, 'SliderView'])->name('manage-slider');
 
-Route::post('/store', [SliderController::class, 'SliderStore'])->name('slider.store');
+    Route::get('/view', [SliderController::class, 'SliderView'])->name('manage-slider');
 
-Route::get('/edit/{id}', [SliderController::class, 'SliderEdit'])->name('slider.edit');
+    Route::post('/store', [SliderController::class, 'SliderStore'])->name('slider.store');
 
-Route::post('/update', [SliderController::class, 'SliderUpdate'])->name('slider.update');
+    Route::get('/edit/{id}', [SliderController::class, 'SliderEdit'])->name('slider.edit');
 
-Route::get('/delete/{id}', [SliderController::class, 'SliderDelete'])->name('slider.delete');
+    Route::post('/update', [SliderController::class, 'SliderUpdate'])->name('slider.update');
 
-Route::get('/inactive/{id}', [SliderController::class, 'SliderInactive'])->name('slider.inactive');
+    Route::get('/delete/{id}', [SliderController::class, 'SliderDelete'])->name('slider.delete');
 
-Route::get('/active/{id}', [SliderController::class, 'SliderActive'])->name('slider.active');
+    Route::get('/inactive/{id}', [SliderController::class, 'SliderInactive'])->name('slider.inactive');
 
-});
+    Route::get('/active/{id}', [SliderController::class, 'SliderActive'])->name('slider.active');
 
+    });
 
 
-// //// Frontend All Routes /////
-// /// Multi Language All Routes ////
 
-// Route::get('/language/hindi', [LanguageController::class, 'Hindi'])->name('hindi.language');
+    // //// Frontend All Routes /////
+    // /// Multi Language All Routes ////
 
-// Route::get('/language/english', [LanguageController::class, 'English'])->name('english.language');
+    // Route::get('/language/hindi', [LanguageController::class, 'Hindi'])->name('hindi.language');
 
+    // Route::get('/language/english', [LanguageController::class, 'English'])->name('english.language');
 
-// Frontend Product Details Page url 
-Route::get('/product/details/{id}/{slug}', [IndexController::class, 'ProductDetails']);
 
+    // Frontend Product Details Page url 
+    Route::get('/product/details/{id}/{slug}', [IndexController::class, 'ProductDetails']);
 
-// Frontend Product Tags Page 
-Route::get('/product/tag/{tag}', [IndexController::class, 'TagWiseProduct']);
 
-// Frontend SubCategory wise Data
-Route::get('/subcategory/product/{subcat_id}/{slug}', [IndexController::class, 'SubCatWiseProduct']);
+    // Frontend Product Tags Page 
+    Route::get('/product/tag/{tag}', [IndexController::class, 'TagWiseProduct']);
 
-// Frontend Sub-SubCategory wise Data
-Route::get('/subsubcategory/product/{subsubcat_id}/{slug}', [IndexController::class, 'SubSubCatWiseProduct']);
+    // Frontend SubCategory wise Data
+    Route::get('/subcategory/product/{subcat_id}/{slug}', [IndexController::class, 'SubCatWiseProduct']);
 
+    // Frontend Sub-SubCategory wise Data
+    Route::get('/subsubcategory/product/{subsubcat_id}/{slug}', [IndexController::class, 'SubSubCatWiseProduct']);
 
-// Product View Modal with Ajax
-Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);
 
-// Add to Cart Store Data
-Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
+    // Product View Modal with Ajax
+    Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);
 
-// Get Data from mini cart
-Route::get('/product/mini/cart/', [CartController::class, 'AddMiniCart']);
+    // Add to Cart Store Data
+    Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
 
-// Remove mini cart
-Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
+    // Get Data from mini cart
+    Route::get('/product/mini/cart/', [CartController::class, 'AddMiniCart']);
 
-// Add to Wishlist
-Route::post('/add-to-wishlist/{product_id}', [CartController::class, 'AddToWishlist']);
+    // Remove mini cart
+    Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
 
+    // Add to Wishlist
+    Route::post('/add-to-wishlist/{product_id}', [CartController::class, 'AddToWishlist']);
 
-/////////////////////  User Must Login  ////
-Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'User'],function(){
 
-// Wishlist page
-Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist');
+    /////////////////////  User Must Login  ////
+    Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'User'],function(){
 
-Route::get('/get-wishlist-product', [WishlistController::class, 'GetWishlistProduct']);
+    // Wishlist page
+    Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist');
 
-Route::get('/wishlist-remove/{id}', [WishlistController::class, 'RemoveWishlistProduct']);
+    Route::get('/get-wishlist-product', [WishlistController::class, 'GetWishlistProduct']);
 
-Route::post('/stripe/order', [StripeController::class, 'StripeOrder'])->name('stripe.order');
+    Route::get('/wishlist-remove/{id}', [WishlistController::class, 'RemoveWishlistProduct']);
 
-Route::post('/cash/order', [CashController::class, 'CashOrder'])->name('cash.order');
+    Route::post('/stripe/order', [StripeController::class, 'StripeOrder'])->name('stripe.order');
 
-Route::post('/manual/order', [ManualController::class, 'ManualOrder'])->name('manual.order');
+    Route::post('/cash/order', [CashController::class, 'CashOrder'])->name('cash.order');
 
-Route::get('/my/orders', [AllUserController::class, 'MyOrders'])->name('my.orders');
+    Route::post('/manual/order', [ManualController::class, 'ManualOrder'])->name('manual.order');
 
-Route::get('/order_details/{order_id}', [AllUserController::class, 'OrderDetails']);
+    Route::get('/my/orders', [AllUserController::class, 'MyOrders'])->name('my.orders');
 
-Route::get('/shipped/delivered/{order_id}', [AllUserController::class, 'UserShippedToDelivered'])->name('user.shipped.delivered');
+    Route::get('/order_details/{order_id}', [AllUserController::class, 'OrderDetails']);
 
-Route::get('/invoice_download/{order_id}', [AllUserController::class, 'InvoiceDownload']);
+    Route::get('/shipped/delivered/{order_id}', [AllUserController::class, 'UserShippedToDelivered'])->name('user.shipped.delivered');
 
-Route::post('/return/order/{order_id}', [AllUserController::class, 'ReturnOrder'])->name('return.order');
+    Route::get('/invoice_download/{order_id}', [AllUserController::class, 'InvoiceDownload']);
 
-Route::get('/return/order/list', [AllUserController::class, 'ReturnOrderList'])->name('return.order.list');
+    Route::post('/return/order/{order_id}', [AllUserController::class, 'ReturnOrder'])->name('return.order');
 
-Route::post('/cancel/{order_id}', [AllUserController::class, 'CancelOrder'])->name('cancel.order');
+    Route::get('/return/order/list', [AllUserController::class, 'ReturnOrderList'])->name('return.order.list');
 
-Route::get('/cancel/orders', [AllUserController::class, 'CancelOrders'])->name('cancel.orders');
+    Route::post('/cancel/{order_id}', [AllUserController::class, 'CancelOrder'])->name('cancel.order');
+
+    Route::get('/cancel/orders', [AllUserController::class, 'CancelOrders'])->name('cancel.orders');
+        
+
+    /// Order Traking Route 
+    Route::post('/order/tracking', [AllUserController::class, 'OrderTraking'])->name('order.tracking');    
+
+    });
+
+
+
+    // My Cart Page All Routes
+    Route::get('/mycart', [CartPageController::class, 'MyCart'])->name('mycart');
+
+    Route::get('/user/get-cart-product', [CartPageController::class, 'GetCartProduct']);
+
+    Route::get('/user/cart-remove/{rowId}', [CartPageController::class, 'RemoveCartProduct']);
+
+    Route::get('/cart-increment/{rowId}', [CartPageController::class, 'CartIncrement']);
+
+    Route::get('/cart-decrement/{rowId}', [CartPageController::class, 'CartDecrement']);
+
+
+    // Admin Coupons All Routes 
+
+    Route::middleware(['auth:admin'])->prefix('coupons')->group(function() { 
+
+
+    Route::get('/view', [CouponController::class, 'CouponView'])->name('manage-coupon');
+
+    Route::post('/store', [CouponController::class, 'CouponStore'])->name('coupon.store');
+
+    Route::get('/edit/{id}', [CouponController::class, 'CouponEdit'])->name('coupon.edit');
+    Route::post('/update/{id}', [CouponController::class, 'CouponUpdate'])->name('coupon.update');
+
+    Route::get('/delete/{id}', [CouponController::class, 'CouponDelete'])->name('coupon.delete');
+    
+    });
+
+
+    // Admin Shipping All Routes 
+    // Route::get('/shipping/district-get/ajax/{division_id}', [ShippingAreaController::class, 'DistrictGetAjax']);
+    Route::middleware(['auth:admin'])->prefix('shipping')->group(function() { 
+
+
+    // Ship Division 
+    Route::get('/division/view', [ShippingAreaController::class, 'DivisionView'])->name('manage-division');
+
+    Route::post('/division/store', [ShippingAreaController::class, 'DivisionStore'])->name('division.store');
+
+    Route::get('/division/edit/{id}', [ShippingAreaController::class, 'DivisionEdit'])->name('division.edit');
+
+    Route::post('/division/update/{id}', [ShippingAreaController::class, 'DivisionUpdate'])->name('division.update');
+
+    Route::get('/division/delete/{id}', [ShippingAreaController::class, 'DivisionDelete'])->name('division.delete');
+
+
+
+    // Ship District 
+    Route::get('/district/view', [ShippingAreaController::class, 'DistrictView'])->name('manage-district');
+
+    Route::get('/district-get/ajax/{division_id}', [ShippingAreaController::class, 'GetDistrictAjax']);
+
+    Route::post('/district/store', [ShippingAreaController::class, 'DistrictStore'])->name('district.store');
+
+    Route::get('/district/edit/{id}', [ShippingAreaController::class, 'DistrictEdit'])->name('district.edit');
+
+    Route::post('/district/update/{id}', [ShippingAreaController::class, 'DistrictUpdate'])->name('district.update');
+
+    Route::get('/district/delete/{id}', [ShippingAreaController::class, 'DistrictDelete'])->name('district.delete');
     
 
-/// Order Traking Route 
-Route::post('/order/tracking', [AllUserController::class, 'OrderTraking'])->name('order.tracking');    
+    // Ship State 
+    Route::get('/state/view', [ShippingAreaController::class, 'StateView'])->name('manage-state');
 
-});
+    Route::post('/state/store', [ShippingAreaController::class, 'StateStore'])->name('state.store');
 
 
+    Route::get('/state/edit/{id}', [ShippingAreaController::class, 'StateEdit'])->name('state.edit');
 
- // My Cart Page All Routes
-Route::get('/mycart', [CartPageController::class, 'MyCart'])->name('mycart');
+    Route::post('/state/update/{id}', [ShippingAreaController::class, 'StateUpdate'])->name('state.update');
 
-Route::get('/user/get-cart-product', [CartPageController::class, 'GetCartProduct']);
+    Route::get('/state/delete/{id}', [ShippingAreaController::class, 'StateDelete'])->name('state.delete');
+    
 
-Route::get('/user/cart-remove/{rowId}', [CartPageController::class, 'RemoveCartProduct']);
+    
+    });
 
-Route::get('/cart-increment/{rowId}', [CartPageController::class, 'CartIncrement']);
 
-Route::get('/cart-decrement/{rowId}', [CartPageController::class, 'CartDecrement']);
 
+    // Frontend Coupon Option
 
-// Admin Coupons All Routes 
+    Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
 
-Route::middleware(['auth:admin'])->prefix('coupons')->group(function() { 
+    Route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
 
+    Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
 
-Route::get('/view', [CouponController::class, 'CouponView'])->name('manage-coupon');
+    // Checkout Routes 
 
-Route::post('/store', [CouponController::class, 'CouponStore'])->name('coupon.store');
+    Route::get('/checkout', [CartController::class, 'CheckoutCreate'])->name('checkout');
 
-Route::get('/edit/{id}', [CouponController::class, 'CouponEdit'])->name('coupon.edit');
-Route::post('/update/{id}', [CouponController::class, 'CouponUpdate'])->name('coupon.update');
+    Route::get('/district-get/ajax/{division_id}', [CheckoutController::class, 'DistrictGetAjax']);
 
-Route::get('/delete/{id}', [CouponController::class, 'CouponDelete'])->name('coupon.delete');
- 
-});
+    Route::get('/state-get/ajax/{district_id}', [CheckoutController::class, 'StateGetAjax']);
 
+    Route::get('/cost-get/ajax/{division_id}/{district_id}/{weight}', [CheckoutController::class, 'CostGetAjax']);
 
-// Admin Shipping All Routes 
-// Route::get('/shipping/district-get/ajax/{division_id}', [ShippingAreaController::class, 'DistrictGetAjax']);
-Route::middleware(['auth:admin'])->prefix('shipping')->group(function() { 
+    Route::post('/checkout/store', [CheckoutController::class, 'CheckoutStore'])->name('checkout.store');
 
 
-// Ship Division 
-Route::get('/division/view', [ShippingAreaController::class, 'DivisionView'])->name('manage-division');
 
-Route::post('/division/store', [ShippingAreaController::class, 'DivisionStore'])->name('division.store');
+    // Admin Order All Routes 
+    Route::middleware(['auth:admin'])->prefix('orders')->group(function() { 
 
-Route::get('/division/edit/{id}', [ShippingAreaController::class, 'DivisionEdit'])->name('division.edit');
 
-Route::post('/division/update/{id}', [ShippingAreaController::class, 'DivisionUpdate'])->name('division.update');
+    Route::get('/pending/orders', [OrderController::class, 'PendingOrders'])->name('pending-orders');
 
-Route::get('/division/delete/{id}', [ShippingAreaController::class, 'DivisionDelete'])->name('division.delete');
+    Route::get('/pending/orders/details/{order_id}', [OrderController::class, 'PendingOrdersDetails'])->name('pending.order.details');
 
+    Route::get('/confirmed/orders', [OrderController::class, 'ConfirmedOrders'])->name('confirmed-orders');
 
+    Route::get('/processing/orders', [OrderController::class, 'ProcessingOrders'])->name('processing-orders');
 
-// Ship District 
-Route::get('/district/view', [ShippingAreaController::class, 'DistrictView'])->name('manage-district');
+    Route::get('/picked/orders', [OrderController::class, 'PickedOrders'])->name('picked-orders');
 
-Route::get('/district-get/ajax/{division_id}', [ShippingAreaController::class, 'GetDistrictAjax']);
+    Route::get('/shipped/orders', [OrderController::class, 'ShippedOrders'])->name('shipped-orders');
 
-Route::post('/district/store', [ShippingAreaController::class, 'DistrictStore'])->name('district.store');
+    Route::get('/delivered/orders', [OrderController::class, 'DeliveredOrders'])->name('delivered-orders');
 
-Route::get('/district/edit/{id}', [ShippingAreaController::class, 'DistrictEdit'])->name('district.edit');
+    Route::get('/cancel/orders', [OrderController::class, 'CancelOrders'])->name('cancel-orders');
 
-Route::post('/district/update/{id}', [ShippingAreaController::class, 'DistrictUpdate'])->name('district.update');
+    // Update Status 
+    Route::get('/pending/confirm/{order_id}', [OrderController::class, 'PendingToConfirm'])->name('pending.confirm');
 
-Route::get('/district/delete/{id}', [ShippingAreaController::class, 'DistrictDelete'])->name('district.delete');
-  
+    Route::get('/confirm/processing/{order_id}', [OrderController::class, 'ConfirmToProcessing'])->name('confirm.processing');
 
-// Ship State 
-Route::get('/state/view', [ShippingAreaController::class, 'StateView'])->name('manage-state');
+    Route::get('/processing/picked/{order_id}', [OrderController::class, 'ProcessingToPicked'])->name('processing.picked');
 
-Route::post('/state/store', [ShippingAreaController::class, 'StateStore'])->name('state.store');
+    Route::get('/picked/shipped/{order_id}', [OrderController::class, 'PickedToShipped'])->name('picked.shipped');
 
+    Route::post('/update', [OrderController::class, 'OrderDataUpdate'])->name('order.update');
 
-Route::get('/state/edit/{id}', [ShippingAreaController::class, 'StateEdit'])->name('state.edit');
+    Route::get('/shipped/delivered/{order_id}', [OrderController::class, 'ShippedToDelivered'])->name('shipped.delivered');
 
-Route::post('/state/update/{id}', [ShippingAreaController::class, 'StateUpdate'])->name('state.update');
+    Route::get('/invoice/download/{order_id}', [OrderController::class, 'AdminInvoiceDownload'])->name('invoice.download');
 
-Route::get('/state/delete/{id}', [ShippingAreaController::class, 'StateDelete'])->name('state.delete');
- 
+    
+    
+    });
 
- 
-});
+    // Admin Reports Routes 
+    Route::middleware(['auth:admin'])->prefix('reports')->group(function() { 
 
 
+    Route::get('/view', [ReportController::class, 'ReportView'])->name('all-reports');
 
-// Frontend Coupon Option
+    Route::post('/search/by/date', [ReportController::class, 'ReportByDate'])->name('search-by-date');
 
-Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
+    Route::post('/search/by/month', [ReportController::class, 'ReportByMonth'])->name('search-by-month');
 
-Route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
+    Route::post('/search/by/year', [ReportController::class, 'ReportByYear'])->name('search-by-year');
 
-Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
+    });
 
- // Checkout Routes 
 
-Route::get('/checkout', [CartController::class, 'CheckoutCreate'])->name('checkout');
 
-Route::get('/district-get/ajax/{division_id}', [CheckoutController::class, 'DistrictGetAjax']);
+    // Admin Get All User Routes 
+    Route::prefix('alluser')->group(function(){
 
-Route::get('/state-get/ajax/{district_id}', [CheckoutController::class, 'StateGetAjax']);
+    Route::get('/view', [AdminProfileController::class, 'AllUsers'])->name('all-users');
+    Route::get('/delete/{id}', [AdminProfileController::class, 'AllUsersDelete'])->name('all-users-delete');
+    
 
-Route::get('/cost-get/ajax/{division_id}/{district_id}/{weight}', [CheckoutController::class, 'CostGetAjax']);
+    });
 
-Route::post('/checkout/store', [CheckoutController::class, 'CheckoutStore'])->name('checkout.store');
 
+    // Admin Cancel Orders
+    Route::middleware(['auth:admin'])->prefix('cancel')->group(function() { 
+        Route::get('/request', [OrderController::class, 'CancelRequest'])->name('cancel.request');
+        Route::get('/request/approve/{order_id}', [OrderController::class, 'CancelRequestApprove'])->name('cancel.approve');
+        Route::get('/all/request', [OrderController::class, 'CancelAllRequest'])->name('cancel.all.request');
+    });
 
+    // Admin Site Setting Routes 
+    Route::middleware(['auth:admin'])->prefix('setting')->group(function() { 
 
-// Admin Order All Routes 
-Route::middleware(['auth:admin'])->prefix('orders')->group(function() { 
 
+    Route::get('/site', [SiteSettingController::class, 'SiteSetting'])->name('site.setting');
+    Route::post('/site/update', [SiteSettingController::class, 'SiteSettingUpdate'])->name('update.sitesetting');
 
-Route::get('/pending/orders', [OrderController::class, 'PendingOrders'])->name('pending-orders');
+    Route::get('/seo', [SiteSettingController::class, 'SeoSetting'])->name('seo.setting'); 
 
-Route::get('/pending/orders/details/{order_id}', [OrderController::class, 'PendingOrdersDetails'])->name('pending.order.details');
+    Route::post('/seo/update', [SiteSettingController::class, 'SeoSettingUpdate'])->name('update.seosetting');
+    });
 
-Route::get('/confirmed/orders', [OrderController::class, 'ConfirmedOrders'])->name('confirmed-orders');
 
-Route::get('/processing/orders', [OrderController::class, 'ProcessingOrders'])->name('processing-orders');
 
-Route::get('/picked/orders', [OrderController::class, 'PickedOrders'])->name('picked-orders');
+    // Admin Return Order Routes 
+    Route::middleware(['auth:admin'])->prefix('return')->group(function() { 
 
-Route::get('/shipped/orders', [OrderController::class, 'ShippedOrders'])->name('shipped-orders');
 
-Route::get('/delivered/orders', [OrderController::class, 'DeliveredOrders'])->name('delivered-orders');
+    Route::get('/admin/request', [ReturnController::class, 'ReturnRequest'])->name('return.request');
 
-Route::get('/cancel/orders', [OrderController::class, 'CancelOrders'])->name('cancel-orders');
+    Route::get('/admin/return/approve/{order_id}', [ReturnController::class, 'ReturnRequestApprove'])->name('return.approve');
 
-// Update Status 
-Route::get('/pending/confirm/{order_id}', [OrderController::class, 'PendingToConfirm'])->name('pending.confirm');
+    Route::get('/admin/all/request', [ReturnController::class, 'ReturnAllRequest'])->name('all.request');
+    
+    });
 
-Route::get('/confirm/processing/{order_id}', [OrderController::class, 'ConfirmToProcessing'])->name('confirm.processing');
+    /// Frontend Product Review Routes
 
-Route::get('/processing/picked/{order_id}', [OrderController::class, 'ProcessingToPicked'])->name('processing.picked');
+    Route::post('/review/store', [ReviewController::class, 'ReviewStore'])->name('review.store');
 
-Route::get('/picked/shipped/{order_id}', [OrderController::class, 'PickedToShipped'])->name('picked.shipped');
 
-Route::post('/update', [OrderController::class, 'OrderDataUpdate'])->name('order.update');
+    // Admin Manage Review Routes 
+    Route::middleware(['auth:admin'])->prefix('review')->group(function() { 
 
-Route::get('/shipped/delivered/{order_id}', [OrderController::class, 'ShippedToDelivered'])->name('shipped.delivered');
 
-Route::get('/invoice/download/{order_id}', [OrderController::class, 'AdminInvoiceDownload'])->name('invoice.download');
+    Route::get('/pending', [ReviewController::class, 'PendingReview'])->name('pending.review');
 
- 
- 
-});
+    Route::get('/admin/approve/{id}', [ReviewController::class, 'ReviewApprove'])->name('review.approve');
 
-// Admin Reports Routes 
-Route::middleware(['auth:admin'])->prefix('reports')->group(function() { 
+    Route::get('/publish', [ReviewController::class, 'PublishReview'])->name('publish.review');
 
+    Route::get('/delete/{id}', [ReviewController::class, 'DeleteReview'])->name('delete.review');
+    
+    });
 
-Route::get('/view', [ReportController::class, 'ReportView'])->name('all-reports');
 
-Route::post('/search/by/date', [ReportController::class, 'ReportByDate'])->name('search-by-date');
 
-Route::post('/search/by/month', [ReportController::class, 'ReportByMonth'])->name('search-by-month');
+    // Admin Manage Stock Routes 
+    Route::middleware(['auth:admin'])->prefix('stock')->group(function() { 
 
-Route::post('/search/by/year', [ReportController::class, 'ReportByYear'])->name('search-by-year');
 
-});
+    Route::get('/product', [ProductController::class, 'ProductStock'])->name('product.stock');
+    
+    
+    });
 
 
 
-// Admin Get All User Routes 
-Route::prefix('alluser')->group(function(){
+    // Admin User Role Routes 
+    Route::middleware(['auth:admin'])->prefix('adminuserrole')->group(function() { 
 
-Route::get('/view', [AdminProfileController::class, 'AllUsers'])->name('all-users');
-Route::get('/delete/{id}', [AdminProfileController::class, 'AllUsersDelete'])->name('all-users-delete');
- 
 
-});
+    Route::get('/all', [AdminUserController::class, 'AllAdminRole'])->name('all.admin.user');
 
+    Route::get('/add', [AdminUserController::class, 'AddAdminRole'])->name('add.admin');
 
-// Admin Cancel Orders
-Route::middleware(['auth:admin'])->prefix('cancel')->group(function() { 
-    Route::get('/request', [OrderController::class, 'CancelRequest'])->name('cancel.request');
-    Route::get('/request/approve/{order_id}', [OrderController::class, 'CancelRequestApprove'])->name('cancel.approve');
-    Route::get('/all/request', [OrderController::class, 'CancelAllRequest'])->name('cancel.all.request');
-});
+    Route::post('/store', [AdminUserController::class, 'StoreAdminRole'])->name('admin.user.store');
+    
+    Route::get('/edit/{id}', [AdminUserController::class, 'EditAdminRole'])->name('edit.admin.user');
 
-// Admin Site Setting Routes 
-Route::middleware(['auth:admin'])->prefix('setting')->group(function() { 
+    Route::post('/update', [AdminUserController::class, 'UpdateAdminRole'])->name('admin.user.update');
 
+    Route::get('/delete/{id}', [AdminUserController::class, 'DeleteAdminRole'])->name('delete.admin.user');
+    
+    });
 
-Route::get('/site', [SiteSettingController::class, 'SiteSetting'])->name('site.setting');
-Route::post('/site/update', [SiteSettingController::class, 'SiteSettingUpdate'])->name('update.sitesetting');
+    /// Product Search Route 
+    Route::post('/search', [IndexController::class, 'ProductSearch'])->name('product.search');
 
-Route::get('/seo', [SiteSettingController::class, 'SeoSetting'])->name('seo.setting'); 
+    // Advance Search Routes 
+    Route::post('search-product', [IndexController::class, 'SearchProduct']);
 
-Route::post('/seo/update', [SiteSettingController::class, 'SeoSettingUpdate'])->name('update.seosetting');
-});
-
-
-
-// Admin Return Order Routes 
-Route::middleware(['auth:admin'])->prefix('return')->group(function() { 
-
-
-Route::get('/admin/request', [ReturnController::class, 'ReturnRequest'])->name('return.request');
-
-Route::get('/admin/return/approve/{order_id}', [ReturnController::class, 'ReturnRequestApprove'])->name('return.approve');
-
-Route::get('/admin/all/request', [ReturnController::class, 'ReturnAllRequest'])->name('all.request');
- 
-});
-
-/// Frontend Product Review Routes
-
-Route::post('/review/store', [ReviewController::class, 'ReviewStore'])->name('review.store');
-
-
-// Admin Manage Review Routes 
-Route::middleware(['auth:admin'])->prefix('review')->group(function() { 
-
-
-Route::get('/pending', [ReviewController::class, 'PendingReview'])->name('pending.review');
-
-Route::get('/admin/approve/{id}', [ReviewController::class, 'ReviewApprove'])->name('review.approve');
-
-Route::get('/publish', [ReviewController::class, 'PublishReview'])->name('publish.review');
-
-Route::get('/delete/{id}', [ReviewController::class, 'DeleteReview'])->name('delete.review');
- 
-});
-
-
-
-// Admin Manage Stock Routes 
-Route::middleware(['auth:admin'])->prefix('stock')->group(function() { 
-
-
-Route::get('/product', [ProductController::class, 'ProductStock'])->name('product.stock');
- 
- 
-});
-
-
-
-// Admin User Role Routes 
-Route::middleware(['auth:admin'])->prefix('adminuserrole')->group(function() { 
-
-
-Route::get('/all', [AdminUserController::class, 'AllAdminRole'])->name('all.admin.user');
-
-Route::get('/add', [AdminUserController::class, 'AddAdminRole'])->name('add.admin');
-
-Route::post('/store', [AdminUserController::class, 'StoreAdminRole'])->name('admin.user.store');
-  
-Route::get('/edit/{id}', [AdminUserController::class, 'EditAdminRole'])->name('edit.admin.user');
-
-Route::post('/update', [AdminUserController::class, 'UpdateAdminRole'])->name('admin.user.update');
-
-Route::get('/delete/{id}', [AdminUserController::class, 'DeleteAdminRole'])->name('delete.admin.user');
- 
-});
-
-/// Product Search Route 
-Route::post('/search', [IndexController::class, 'ProductSearch'])->name('product.search');
-
-// Advance Search Routes 
-Route::post('search-product', [IndexController::class, 'SearchProduct']);
-
-// Shop Page Route 
-Route::get('/shop', [ShopController::class, 'ShopPage'])->name('shop.page');
-Route::post('/shop/filter', [ShopController::class, 'ShopFilter'])->name('shop.filter');
+    // Shop Page Route 
+    Route::get('/shop', [ShopController::class, 'ShopPage'])->name('shop.page');
+    Route::post('/shop/filter', [ShopController::class, 'ShopFilter'])->name('shop.filter');

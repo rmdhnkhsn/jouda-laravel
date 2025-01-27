@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>JOUDA | Invoice</title>
+    <title>Invoice</title>
     <style>
         .page-break {
             page-break-after: always;
@@ -66,7 +66,7 @@
     <table width="100%" style="line-height: 1.2;">
         <tr style="font-size: 13px">
             <td width="10%">Penjual</td>
-            <td width="40%">: <strong>Jouda</strong> | Joudaofficialstore@gmail.com</td>
+            <td width="40%">: <strong>MSHOP</strong> | mshopofficialstore@gmail.com</td>
             <td width="17%">Pembeli</td>
             <td>: <strong>{{ $order->name }}</strong> | {{ $order->email }}</td>
         </tr>
@@ -171,7 +171,7 @@
     <table width="100%" style="border-bottom: 1px solid #dedede"></table>
     <p>Invoice ini sah dan diproses oleh komputer.</p>
     <p style="line-height: 5px">
-        Silakan hubungi <strong>jouda Care</strong> apabila kamu membutuhkan bantuan.
+        Silakan hubungi <strong>Admin</strong> apabila kamu membutuhkan bantuan.
         <span style="float: right; font-style: italic">Terakhir diupdate: {{ $order->updated_at }} WIB</span>
     </p>
 

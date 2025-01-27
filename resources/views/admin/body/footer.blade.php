@@ -9,5 +9,5 @@
       </li>
     </ul>
     </div>
-    &copy; 2024 <a href="#">Jouda|Official</a>. All Rights Reserved.
+    &copy; 2024 <a href="#"></a>. All Rights Reserved.
   </footer>

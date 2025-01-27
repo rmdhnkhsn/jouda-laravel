@@ -37,5 +37,5 @@
             <li><a href="#">Contact Us</a></li>
         </ul>
     </div>
-    <div class="copyright">Copyright ©2024, JOUDA INDONESIA, All Rights Reserved.</div>
+    <div class="copyright">Copyright ©2024, All Rights Reserved.</div>
 </footer>

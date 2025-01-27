@@ -227,3 +227,24 @@ function hidePanels() {
       arrowLinks[i].classList.remove("active"); // Remove `active` class from all `.arrow-link`
   }
 }
+
+function switchLanguage() {
+    console.log('SWITCH LANGUAGE')
+    // doGet("/ubahBahasa", function (msg, res) {
+    //     console.log(res);
+
+    //     if (res.rc === 0) {
+    //         location.reload();
+    //         // window.location.replace("/");
+    //     }
+    // });
+
+    $.ajax({
+        url: "/ubahBahasa",
+        type: "GET",
+        dataType: "json",
+        success: function (res) {
+            console.log(res)
+        },
+    });
+}

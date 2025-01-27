@@ -3,7 +3,7 @@
 @section('content')
 
 @section('title')
-JOUDA|Official
+M SHOP|Official
 @endsection
 
 <section class="content" id="web">

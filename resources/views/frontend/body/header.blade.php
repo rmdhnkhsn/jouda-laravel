@@ -5,8 +5,8 @@
     </div>
     <a href="{{ url('/') }}" class="nav-logo">
         <img src="{{ asset('frontend/bundle/img/logo.svg') }}">
-        <div class="title">JOUDA</div>
-        <div class="sub-title">INDONESIA</div>
+        <div class="title">YOUR</div>
+        <div class="sub-title">LOGO</div>
       </a>
     <div class="nav-end">
       @auth
@@ -30,17 +30,6 @@
           <div class="countCart" id="cartQty">0</div>
         </div>
       </a>
-      <!-- <div class="nav-cart">
-          <div class="containerCart">
-              <div class="cartIcon">
-                  <i class='bx bx-shopping-bag'></i>
-                  <div class="countCart" id="cartQty">0</div>
-              </div>
-              <div class="detail-cart">
-                  <div class="empty">Keranjang Anda Masih Kosong !!</div>
-              </div>
-          </div>
-      </div> -->
     </div>
 </nav>
 <div id="backdrop" class="">

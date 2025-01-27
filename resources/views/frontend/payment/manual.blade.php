@@ -68,7 +68,7 @@ Transfer Bank Manual
                         <div class="labelForm">Silahkan lakukan pembayaran transfer bank pada no. rekening berikut!</div>
                         <img src="{{ asset('frontend/assets/images/payments/bri.png') }}" alt="bri" style="height: 30px;">
                         <p>029872653781</p>
-                        <p>A.n. Jouda|Official.</p>
+                        <p>A.n. John Doe.</p>
                         <div class="form-group mt-4">
                             <div class="form-group">
                                 <label class="labelForm" for="foto">
